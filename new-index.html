@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NS Food Paradise | Authentic Indian Cuisine</title>
+    
+    <!-- Performance Optimizer (loads immediately) -->
+    <script src="performance-optimizer.js"></script>
+    <!-- Critical CSS Inline for faster rendering -->
+    <style>
+        /* Critical CSS for above-the-fold content */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        
+        .food-loader {
+            margin-bottom: 20px;
+        }
+        
+        .loader-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #800000;
+        }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            color: #fff;
+        }
+    </style>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+    
+    <!-- Complete Google Fonts (deferred) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- AOS Animation Library (deferred) -->
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></noscript>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+</head>
+<body>
+    <!-- Optimized Preloader -->
+    <div id="preloader">
+        <div class="food-loader">
+            <!-- Simplified SVG for faster rendering -->
+            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="42" stroke="#800000" stroke-width="4"/>
+                <circle cx="50" cy="50" r="20" fill="#d4af37"/>
+            </svg>
+        </div>
+        <div class="loader-text">LOADING...</div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-utensils"></i> NS Food Paradise
+            </div>
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" placeholder="Search for authentic Indian dishes...">
+                    <div class="search-suggestions">
+                        <div class="suggestion-item">
+                            <i class="fas fa-utensils"></i>
+                            <span>Bihari Thali</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <i class="fas fa-pepper-hot"></i>
+                            <span>Litti Chokha</span>
+                        </div>
+                        <div class="suggestion-item">
+                            <i class="fas fa-bread-slice"></i>
+                            <span>Sattu Paratha</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#reservation" class="nav-btn reservation-btn">Reserve Table</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="video-container">
+            <!-- Using background image by default for faster initial loading -->
+            <div class="background-image" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;"></div>
+            
+            <!-- Video loads after page is ready, with loading="lazy" attribute -->
+            <video autoplay muted loop poster="https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" loading="lazy" preload="none">
+                <!-- Smaller, optimized video source -->
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-serving-indian-food-5663-small.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text" data-aos="fade-up" data-aos-duration="1000">
+                <h1>Experience <span>Authentic</span> Indian Cuisine</h1>
+                <p>Indulge in the rich flavors of Bihar with our handcrafted traditional dishes. A culinary journey through the heart of India's most cherished recipes.</p>
+                <div class="cta-buttons">
+                    <a href="#menu" class="btn btn-primary"><i class="fas fa-utensils"></i> Explore Our Menu</a>
+                    <a href="#reservation" class="btn btn-secondary"><i class="fas fa-calendar-alt"></i> Reserve a Table</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Exquisite Menu</h2>
+                <p>Discover the authentic flavors of Bihar and North Indian cuisine</p>
+            </div>
+            
+            <div class="menu-filter" data-aos="fade-up">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="starters">Starters</button>
+                <button class="filter-btn" data-filter="main-course">Main Course</button>
+                <button class="filter-btn" data-filter="breads">Breads</button>
+                <button class="filter-btn" data-filter="desserts">Desserts</button>
+                <button class="filter-btn" data-filter="beverages">Beverages</button>
+            </div>
+            
+            <div class="menu-items-container">
+                <!-- Starters -->
+                <div class="menu-item" data-category="starters" data-aos="fade-up" data-aos-delay="100">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Litti Chokha">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Litti Chokha</h3>
+                            <span class="price">₹180</span>
+                        </div>
+                        <p class="menu-item-desc">Traditional Bihari wheat balls filled with roasted gram flour, served with mashed potatoes and brinjal.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge vegetarian"><i class="fas fa-leaf"></i> Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="starters" data-aos="fade-up" data-aos-delay="150">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sattu Paratha">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Sattu Paratha</h3>
+                            <span class="price">₹150</span>
+                        </div>
+                        <p class="menu-item-desc">Whole wheat flatbread stuffed with spiced roasted gram flour, served with yogurt and pickle.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge vegetarian"><i class="fas fa-leaf"></i> Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="starters" data-aos="fade-up" data-aos-delay="200">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Dahi Chura">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Dahi Chura</h3>
+                            <span class="price">₹120</span>
+                        </div>
+                        <p class="menu-item-desc">Flattened rice soaked in yogurt, topped with fruits, nuts and jaggery. A traditional Bihari breakfast.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge vegetarian"><i class="fas fa-leaf"></i> Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Course -->
+                <div class="menu-item" data-category="main-course" data-aos="fade-up" data-aos-delay="100">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Bihari Thali">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Royal Bihari Thali</h3>
+                            <span class="price">₹350</span>
+                        </div>
+                        <p class="menu-item-desc">A complete meal with litti, chokha, sattu paratha, dal, rice, vegetable curry, chutney, papad and dessert.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge vegetarian"><i class="fas fa-leaf"></i> Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="main-course" data-aos="fade-up" data-aos-delay="150">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Mutton Curry">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Champaran Mutton</h3>
+                            <span class="price">₹320</span>
+                        </div>
+                        <p class="menu-item-desc">Slow-cooked mutton in earthen pot with aromatic spices, garlic and mustard oil. A specialty from Champaran region.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge non-vegetarian"><i class="fas fa-drumstick-bite"></i> Non-Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item" data-category="main-course" data-aos="fade-up" data-aos-delay="200">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Fish Curry">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Maithili Fish Curry</h3>
+                            <span class="price">₹280</span>
+                        </div>
+                        <p class="menu-item-desc">Fresh river fish cooked in mustard and fenugreek gravy, a traditional recipe from Mithila region.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge non-vegetarian"><i class="fas fa-fish"></i> Non-Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Breads -->
+                <div class="menu-item" data-category="breads" data-aos="fade-up" data-aos-delay="100">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Naan">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Butter Naan</h3>
+                            <span class="price">₹60</span>
+                        </div>
+                        <p class="menu-item-desc">Soft leavened bread baked in tandoor and brushed with butter.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge vegetarian"><i class="fas fa-leaf"></i> Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desserts -->
+                <div class="menu-item" data-category="desserts" data-aos="fade-up" data-aos-delay="100">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Khaja">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Khaja</h3>
+                            <span class="price">₹120</span>
+                        </div>
+                        <p class="menu-item-desc">Layered pastry dipped in sugar syrup, a famous sweet from Silao, Bihar.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge vegetarian"><i class="fas fa-leaf"></i> Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Beverages -->
+                <div class="menu-item" data-category="beverages" data-aos="fade-up" data-aos-delay="100">
+                    <div class="menu-item-image">
+                        <img src="https://images.unsplash.com/photo-1544252890-c3e4f8353c98?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sattu Drink">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3>Sattu Sharbat</h3>
+                            <span class="price">₹80</span>
+                        </div>
+                        <p class="menu-item-desc">Refreshing summer drink made with roasted gram flour, lemon, mint and spices.</p>
+                        <div class="menu-item-actions">
+                            <span class="badge vegetarian"><i class="fas fa-leaf"></i> Veg</span>
+                            <button class="add-to-cart"><i class="fas fa-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-cta" data-aos="fade-up">
+                <a href="#" class="btn btn-primary download-menu"><i class="fas fa-download"></i> Download Full Menu</a>
+                <a href="#order" class="btn btn-secondary order-online"><i class="fas fa-shopping-bag"></i> Order Online</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Reservation Section -->
+    <section class="reservation-section" id="reservation">
+        <div class="container">
+            <div class="reservation-container">
+                <div class="reservation-image" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior">
+                </div>
+                <div class="reservation-form-container" data-aos="fade-left">
+                    <div class="section-title text-left">
+                        <h2>Reserve Your Table</h2>
+                        <p>Experience the authentic flavors of Bihar in an elegant setting</p>
+                    </div>
+                    <form class="reservation-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" placeholder="Your Phone" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input type="time" id="time" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="guests">Guests</label>
+                                <select id="guests" required>
+                                    <option value="1">1 Person</option>
+                                    <option value="2" selected>2 People</option>
+                                    <option value="3">3 People</option>
+                                    <option value="4">4 People</option>
+                                    <option value="5">5 People</option>
+                                    <option value="6+">6+ People</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="occasion">Occasion (Optional)</label>
+                                <select id="occasion">
+                                    <option value="">Select Occasion</option>
+                                    <option value="birthday">Birthday</option>
+                                    <option value="anniversary">Anniversary</option>
+                                    <option value="business">Business Meal</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="special-request">Special Request (Optional)</label>
+                            <textarea id="special-request" placeholder="Any special requests or dietary requirements?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Confirm Reservation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Food Gallery</h2>
+                <p>A visual feast of our culinary creations</p>
+            </div>
+            
+            <div class="gallery-container" data-aos="fade-up">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1585937421612-70a008356c36?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Bihari Thali">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Royal Bihari Thali</h3>
+                            <p>A complete traditional meal</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Litti Chokha">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Litti Chokha</h3>
+                            <p>Bihar's signature dish</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Mutton Curry">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Champaran Mutton</h3>
+                            <p>Slow-cooked to perfection</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sattu Paratha">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Sattu Paratha</h3>
+                            <p>Stuffed with spiced gram flour</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Khaja">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Khaja</h3>
+                            <p>Traditional Bihari sweet</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior">
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3>Elegant Ambience</h3>
+                            <p>Dine in luxury</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>What Our Guests Say</h2>
+                <p>Hear from our satisfied customers</p>
+            </div>
+            
+            <div class="testimonials-carousel" data-aos="fade-up">
+                <div class="testimonial-item active">
+                    <div class="testimonial-content">
+                        <div class="testimonial-text">
+                            <p>"The authentic Bihari cuisine at NS Food Paradise transported me back to my hometown. The Litti Chokha was perfectly made, and the ambience was truly royal. Will definitely come back!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Customer">
+                            <div class="author-info">
+                                <h4>Rajesh Kumar</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="testimonial-text">
+                            <p>"As someone who has never tried Bihari food before, I was amazed by the flavors at NS Food Paradise. The staff was very helpful in explaining the dishes, and the Champaran Mutton was out of this world!"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Customer">
+                            <div class="author-info">
+                                <h4>Priya Singh</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="testimonial-text">
+                            <p>"The Royal Bihari Thali is a must-try! It offers a perfect sampling of Bihar's culinary treasures. The restaurant's ambience and service are top-notch. Highly recommend for special occasions."</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/62.jpg" alt="Customer">
+                            <div class="author-info">
+                                <h4>Amit Verma</h4>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-controls">
+                <button class="prev-testimonial"><i class="fas fa-chevron-left"></i></button>
+                <div class="testimonial-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <button class="next-testimonial"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-container">
+                <div class="about-image" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Chef">
+                </div>
+                <div class="about-content" data-aos="fade-left">
+                    <div class="section-title text-left">
+                        <h2>Our Story</h2>
+                        <p>Bringing Bihar's culinary heritage to your plate</p>
+                    </div>
+                    <div class="about-text">
+                        <p>NS Food Paradise was born from a passion to showcase the rich culinary heritage of Bihar to the world. Founded by Nishikant, a second-year student from Bihar with a deep love for his homeland's cuisine, our restaurant aims to preserve traditional recipes while presenting them in a contemporary setting.</p>
+                        <p>Every dish at NS Food Paradise tells a story of Bihar's diverse cultural influences, from the Mughal era to the present day. Our chefs, trained in authentic Bihari cooking techniques, use locally-sourced ingredients to create dishes that are true to their origins.</p>
+                        <h3>Meet Our Chef</h3>
+                        <p>Chef Ravi Kumar brings over 15 years of experience in traditional Bihari cuisine. Born and raised in Patna, he learned the art of cooking from his grandmother, who passed down recipes that had been in their family for generations. His innovative approach to traditional dishes has earned him recognition in culinary circles across India.</p>
+                        <div class="chef-signature">
+                            <img src="https://i.imgur.com/1234abcd.png" alt="Chef's Signature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Our Location</h3>
+                            <p>123 Gandhi Maidan, Patna, Bihar 800001</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Call Us</h3>
+                            <p>+91 9876543210</p>
+                            <p>+91 8765432109</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email Us</h3>
+                            <p>info@nsfoodparadise.com</p>
+                            <p>reservations@nsfoodparadise.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Opening Hours</h3>
+                            <p>Monday - Sunday: 11:00 AM - 11:00 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container" data-aos="fade-left">
+                    <form class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Your Name</label>
+                                <input type="text" id="contact-name" placeholder="Enter your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Your Email</label>
+                                <input type="email" id="contact-email" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" placeholder="Enter subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" placeholder="Enter your message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="map-container" data-aos="fade-up">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14399.37835508978!2d85.13756423022462!3d25.611000000000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed585f2f5f0b89%3A0x87add839d6bfd27d!2sGandhi%20Maidan%2C%20Patna%2C%20Bihar%20800001!5e0!3m2!1sen!2sin!4v1623456789012!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Chat Integration -->
+    <div class="whatsapp-chat">
+        <a href="https://wa.me/919876543210" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            <span>Chat with us</span>
+        </a>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-utensils"></i>
+                    <h2>NS Food Paradise</h2>
+                    <p>Authentic Bihar Cuisine</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#menu">Menu</a></li>
+                            <li><a href="#gallery">Gallery</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#reservation">Table Reservation</a></li>
+                            <li><a href="#order">Online Ordering</a></li>
+                            <li><a href="#">Private Dining</a></li>
+                            <li><a href="#">Catering</a></li>
+                            <li><a href="#">Gift Cards</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>Newsletter</h3>
+                        <p>Subscribe to our newsletter for special offers and updates</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>Crafted with ❤️ by Nishikant, 2nd Year Student | Bihar</p>
+                </div>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS Animation Library with fallback -->
+    <script>
+        // Create a function to handle script loading errors
+        function handleScriptError(scriptSrc, fallbackSrc) {
+            console.log('Error loading script: ' + scriptSrc + ', trying fallback if available');
+            if (fallbackSrc) {
+                const fallbackScript = document.createElement('script');
+                fallbackScript.src = fallbackSrc;
+                document.body.appendChild(fallbackScript);
+            }
+        }
+    </script>
+    
+    <!-- Load AOS with error handling -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" onerror="handleScriptError('https://unpkg.com/aos@2.3.1/dist/aos.js', 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js')"></script>
+    
+    <!-- Connection Handler (loads first to handle any connection issues) -->
+    <script src="connection-handler.js"></script>
+    
+    <!-- Image Optimizer (loads early to optimize images) -->
+    <script src="image-optimizer.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="new-script.js"></script>
+</body>
+</html>
